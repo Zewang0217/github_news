@@ -9,14 +9,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // 设置静态文件目录
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static('public'));
 
 // 解析JSON请求体
 app.use(express.json());
 
 // 主页面路由
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile('public/index.html', { root: __dirname + '/../' });
 });
 
 // API端点：生成技术速递

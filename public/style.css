@@ -36,7 +36,8 @@ header {
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 240, 255, 0.1);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    z-index: 100;
 }
 
 header::before {
@@ -78,6 +79,7 @@ main {
     padding: 30px;
     position: relative;
     overflow: hidden;
+    z-index: 2;
 }
 
 .input-section {
@@ -539,8 +541,10 @@ article, #resultContainer article {
     border: 1px solid rgba(0, 240, 255, 0.4);
     border-radius: 8px;
     box-shadow: 0 8px 24px rgba(0, 240, 255, 0.3);
-    z-index: 1000;
+    z-index: 10000;
     backdrop-filter: blur(15px);
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 .history-header {
@@ -943,6 +947,7 @@ ai-explain-btn, .ai-explain-btn {
     margin-bottom: 30px;
     position: relative;
     overflow: hidden;
+    z-index: 1;
 }
 
 .toggle-usage-btn {
