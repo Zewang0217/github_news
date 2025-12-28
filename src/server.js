@@ -9,29 +9,223 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 获取项目根目录
-const rootDir = path.resolve(__dirname, '..');
-
 // 解析JSON请求体
 app.use(express.json());
 
-// 静态文件路由 - 处理CSS和JS文件
-app.get('/:file(style.css|script.js)', (req, res) => {
-  const filePath = path.join(rootDir, 'public', req.params.file);
-  res.sendFile(filePath);
-});
-
-// 主页面路由
-app.get('/', (req, res) => {
-  const filePath = path.join(rootDir, 'public', 'index.html');
-  fs.readFile(filePath, 'utf8', (err, data) => {
+// 添加调试路由，查看Vercel环境中的文件结构
+app.get('/debug', (req, res) => {
+  const cwd = process.cwd();
+  const __dirnamePath = __dirname;
+  const rootDir = path.resolve(__dirname, '..');
+  
+  // 查看当前目录下的文件
+  fs.readdir(cwd, (err, files) => {
     if (err) {
-      console.error('Error reading index.html:', err);
-      res.status(500).send('Error loading page');
+      res.json({ error: err.message });
       return;
     }
-    res.send(data);
+    
+    // 查看上一级目录下的文件
+    fs.readdir(path.join(cwd, '..'), (err2, files2) => {
+      if (err2) {
+        res.json({
+          cwd,
+          __dirname: __dirnamePath,
+          rootDir,
+          filesInCwd: files,
+          errorInParentDir: err2.message
+        });
+        return;
+      }
+      
+      res.json({
+        cwd,
+        __dirname: __dirnamePath,
+        rootDir,
+        filesInCwd: files,
+        filesInParentDir: files2
+      });
+    });
   });
+});
+
+// 主页面路由 - 使用内联HTML，避免文件路径问题
+app.get('/', (req, res) => {
+  const html = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub技术速递生成器</title>
+    <style>
+        /* 基本样式 - 避免外部CSS依赖 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: #333;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GitHub技术速递生成器</h1>
+            <p>自动收集并生成指定领域的GitHub热门项目报告</p>
+        </header>
+
+        <div class="input-section">
+            <form id="generateForm">
+                <div class="form-group">
+                    <label for="domains">技术领域</label>
+                    <input
+                        type="text"
+                        id="domains"
+                        name="domains"
+                        placeholder="例如：AI, Java, Rust"
+                        required
+                    >
+                    <small>支持输入多个领域，用逗号分隔</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="generateBtn">生成技术速递</button>
+                </div>
+            </form>
+
+            <div id="loading" style="display: none;">
+                <p>正在生成技术速递...</p>
+            </div>
+        </div>
+
+        <div class="result-section" id="resultSection" style="display: none;">
+            <h2>生成结果</h2>
+            <div id="resultContainer"></div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 GitHub技术速递生成器 | 基于GitHub API和DeepSeek大模型</p>
+        </footer>
+    </div>
+
+    <script>
+        // 简化版的前端逻辑
+        document.getElementById('generateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const domains = document.getElementById('domains').value;
+            const loading = document.getElementById('loading');
+            const resultSection = document.getElementById('resultSection');
+            const resultContainer = document.getElementById('resultContainer');
+            
+            loading.style.display = 'block';
+            
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        domains: domains,
+                        days: 7
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultContainer.innerHTML = data.html;
+                    resultSection.style.display = 'block';
+                } else {
+                    resultContainer.innerHTML = '<p style="color: red;">生成失败：' + data.error + '</p>';
+                    resultSection.style.display = 'block';
+                }
+            } catch (error) {
+                resultContainer.innerHTML = '<p style="color: red;">生成失败：' + error.message + '</p>';
+                resultSection.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>`;
+  
+  res.send(html);
 });
 
 // API端点：生成技术速递
