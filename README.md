@@ -143,15 +143,15 @@ Options:
 
 #### 桌面端效果
 
-! `//github.com/Zewang0217/github_news/raw/main/photos/desktop-example.png`
+! `/Zewang0217/github_news/raw/main/photos/desktop-example.png`
 
-###` 移动端效果
+###` 移动端效`
 
-! `http `ub.com/Zewang0217/github_news/raw/main/photos/mobile-example.png`
+! ``ttp `ub.c `g021 `_news/raw/main/photos/mobile-example.png`
 
 #### 技术领域`区示例
 
-! `https://gi `wang0217/github_news/raw/main/photos/section-example.png`
+! `htt`s://gi `wan`0217/g `/raw/main/ `ion-example.png`
 
 ## 生成结果
 
@@ -218,32 +218,31 @@ YYMMDDHHmm.html
 
 ### 主页
 
-![主页](https://github.com/Zewang0217/github_news/blob/main/photos/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.png)
+! `https://github.com/ `g0217/github_news/ `ain/photos/%E4%B8%B `A1%B5.png`
+
+### 体验地址
+https://github-news-roan.vercel.app/
 
 ### 使用说明
 
-![https://github.com/Zewang0217/github_news/blob/main/photos/%E4%B8%BB%E9%A1%B5.png](https://github.com/Zewang0217/github_news/blob/main/photos/%E4%B8%BB%E9%A1%B5.png)
+! `https://`ithub.com/Zew `/github`news/raw/main `/%E4%BD%`F%E7%94%A8%E8 `E6%98%8E.png`
 
 ### 历史报告记录
 
-! `https://git`ub.com/Zewang02 `_news/raw/main/photos/%E5%8E%86%E5%8F%B2%E6%8A%A5%E5%91%8A%E8%AE%B0%E5%BD%95.png`
+! `https://git`ub.com/Zewang02 `_news/raw/`ain/photos/%E5% `8F%B2%E6%8A`A5%E5%91%8A%E8% `BD%95.png`
 
 ### 效果展示
 
-! `https://github.com/Z`wang0217/gith `/raw/main/photos/%E6%8A%A5%E5%91%8A%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA.png`
+! `https://github.com/Z`wang0217/gith `/raw/main/photos/%E`%8A%A5%E5%91% `5%88%E6%9E%9C%E5%B1%`5%E7%A4%BA.pn ` 多关键词
 
-### 多关键词
+! `https://github.com/Zewang`217/github_ne `main/photos/%E6%94%AF%E6`8C%81%E5%A4%9 `%B3%E9%94%AE%E8%AF%8D%E6%`0%9C%E7%B4%A2 `### 提示词自定义
 
-! `https://github.com/Zewang`217/github_ne `main/photos/%E6%94%AF%E6%8C%81%E5%A4%9A%E5%85%B3%E9%94%AE%E8%AF%8D%E6%90%9C%E7%B4%A2.png`
-
-### 提示词自定义
-
-! `https://github.com/Zewang021`/github_news/ra `otos/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%90%E7%A4%BA%E8%AF%8D.png`
+! `https://github.com/Zewang021`/github_news/ra `otos/%E8%87%AA%E5%AE%9A%E4%`9%89%E6%8F%90%E `8%AF%8D.png`
 
 ### 日期选择
 
-! `https://github.com/Zewang0217/github_`ews/raw/main/ `%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E6%9C%9F%E8%8C%83%E5%9B%B4.png`
+! `h`tps://github.ce `217/github_`ews/raw/main/ `%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5`E6%9C%9F%E8%8 `%9B%B4.png`
 
 ### 单个项目内容
 
-! `https://github.com/Zewang0217/github_new`/raw/main/photo `B9%E7%9B%AE%E5%86%85%E5%AE%B9.png``)`
+! `https://g`thub.com/Zew/ `github_new`/raw/main/photo `B9%E7%9B%AE%E5%86%85%E5%AE%B9.png``)`` `` ````
