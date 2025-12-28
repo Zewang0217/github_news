@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最近一周 GitHub 技术速递：AI 与 Java 领域</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            color: #444;
+            background-color: #f6f8fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .section {
+            padding: 30px 20px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: #222;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        article {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        article:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        article h3 {
+            font-size: 20px;
+            color: #222;
+            margin-bottom: 10px;
+        }
+        
+        article .summary {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        article ul {
+            list-style: none;
+            margin-bottom: 15px;
+            padding-left: 0;
+        }
+        
+        article ul li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 14px;
+        }
+        
+        article ul li:before {
+            content: "•";
+            position: absolute;
+            left: 5px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        article .reason {
+            background-color: #e8f4f8;
+            border-left: 4px solid #0969da;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        article .reason strong {
+            color: #0969da;
+        }
+        
+        article a {
+            color: #0969da;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        article a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #888;
+            background-color: #f6f8fa;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .badge-ai {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .badge-java {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .badge-new {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+        
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 22px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            article {
+                padding: 15px;
+            }
+            
+            article h3 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>最近一周 GitHub 技术速递</h1>
+            <p>AI 与 Java 领域热门项目精选 · 数据截至 2025-12-28</p>
+        </header>
+        
+        <section class="section">
+            <h2 class="section-title">AI 领域</h2>
+            
+            <article>
+                <h3>Memvid (Memvid)</h3>
+                <p class="summary">单文件AI记忆层，支持即时检索和长期记忆</p>
+                <ul>
+                    <li>技术栈：Python，采用视频编码灵感的Smart Frame设计</li>
+                    <li>性能：亚5毫秒本地内存访问，支持时间旅行调试</li>
+                    <li>社区：Apache 2.0许可，v2版本即将发布</li>
+                </ul>
+                <p class="reason"><strong>推荐理由：</strong>为AI Agent提供无数据库的便携式记忆解决方案，解决长期记忆痛点</p>
+                <p><a href="https://github.com/memvid/memvid" aria-label="查看 Memvid GitHub 仓库">https://github.com/memvid/memvid</a></p>
+            </article>
+            
+            <article>
+                <h3>Kodezi Chronos (Kodezi Chronos)</h3>
+                <p class="summary">首个调试优先的语言模型，SWE-bench Lite 80.33%</p>
+                <ul>
+                    <li>技术栈：七层架构，42.5M调试样本训练，AGR检索引擎</li>
+                    <li>性能：SWE-bench Lite 80.33%，比第二名高20个百分点</li>
+                    <li>社区：arXiv论文发布，Q1 2026通过Kodezi OS开放</li>
+                </ul>
+                <p class="reason"><strong>推荐理由：</strong>填补调试与代码生成之间的巨大性能差距，为开发者提供专业级调试能力</p>
+                <p><a href="https://github.com/Kodezi/Chronos" aria-label="查看 Kodezi Chronos GitHub 仓库">https://github.com/Kodezi/Chronos</a></p>
+            </article>
+            
+            <article>
+                <h3>TradingAgents (TradingAgents)</h3>
+                <p class="summary">多代理LLM金融交易框架，模拟真实交易公司</p>
+                <ul>
+                    <li>技术栈：LangGraph，支持OpenAI/Anthropic模型，Alpha Vantage数据</li>
+                    <li>功能：基本面、情感、新闻、技术分析师团队协作决策</li>
+                    <li>社区：arXiv论文，开源CLI工具，活跃Discord社区</li>
+                </ul>
+                <p class="reason"><strong>推荐理由：</strong>展示多代理协作在复杂决策场景中的应用，为金融AI研究提供完整框架</p>
+                <p><a href="https://github.com/TauricResearch/TradingAgents" aria-label="查看 TradingAgents GitHub 仓库">https://github.com/TauricResearch/TradingAgents</a></p>
+            </article>
+            
+            <article>
+                <h3>UI-TARS Desktop (bytedance/UI-TARS-desktop)</h3>
+                <p class="summary">多模态AI Agent堆栈，支持GUI自动化与MCP集成</p>
+                <ul>
+                    <li>技术栈：TypeScript，支持Anthropic/Volcengine等LLM提供商</li>
+                    <li>功能：浏览器/计算机控制，事件流调试，CLI/Web UI工具</li>
+                    <li>社区：字节跳动开源，活跃开发中</li>
+                </ul>
+                <p class="reason"><strong>推荐理由：</strong>填补AI Agent与GUI交互的空白，为自动化测试和RPA提供新思路</p>
+                <p><a href="https://github.com/bytedance/UI-TARS-desktop" aria-label="查看 UI-TARS Desktop GitHub 仓库">https://github.com/bytedance/UI-TARS-desktop</a></p>
+            </article>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Java 领域</h2>
+            
+            <article>
+                <h3>MCP for Beginners (microsoft/mcp-for-beginners)</h3>
+                <p class="summary">Model Context Protocol初学者教程，多语言实践</p>
+                <ul>
+                    <li>技术栈：C#/Java/Python，涵盖MCP服务器/客户端实现</li>
+                    <li>内容：安全、数据库集成、Azure部署等完整课程</li>
+                    <li>社区：微软官方维护，开源教育资源</li>
+                </ul>
+                <p class="reason"><strong>推荐理由：</strong>官方权威教程，帮助开发者快速掌握MCP这一新兴AI协议</p>
+                <p><a href="https://github.com/microsoft/mcp-for-beginners" aria-label="查看 MCP for Beginners GitHub 仓库">https://github.com/microsoft/mcp-for-beginners</a></p>
+            </article>
+            
+            <article>
+                <h3>Koog (JetBrains/koog)</h3>
+                <p class="summary">Kotlin AI代理框架，支持多平台部署</p>
+                <ul>
+                    <li>技术栈：Kotlin 2.1，支持JVM/JS/WasmJS/Android/iOS</li>
+                    <li>功能：历史压缩、OpenTelemetry监控、MCP/ACP协议集成</li>
+                    <li>社区：JetBrains孵化项目，Maven Central 0.6.0版本</li>
+                </ul>
+                <p class="reason"><strong>推荐理由：</strong>JetBrains官方出品，为Kotlin开发者提供类型安全的AI Agent开发体验</p>
+                <p><a href="https://github.com/JetBrains/koog" aria-label="查看 Koog GitHub 仓库">https://github.com/JetBrains/koog</a></p>
+            </article>
+            
+            <article>
+                <h3>DeepSeek4J (pig-mesh/deepseek4j)</h3>
+                <p class="summary">DeepSeek Java SDK，支持R1/V3全系列模型</p>
+                <ul>
+                    <li>技术栈：Java，Spring Boot Starter，Reactor响应式</li>
+                    <li>功能：对话推理、函数调用、JSON输出、WebSearch联网</li>
+                    <li>社区：Apache 2.0许可，Maven Central 1.4.7版本</li>
+                </ul>
+                <p class="reason"><strong>推荐理由：</strong>为Java开发者提供DeepSeek模型完整支持，Spring Boot集成开箱即用</p>
+                <p><a href="https://github.com/pig-mesh/deepseek4j" aria-label="查看 DeepSeek4J GitHub 仓库">https://github.com/pig-mesh/deepseek4j</a></p>
+            </article>
+            
+            <article>
+                <h3>Javelit (javelit/javelit)</h3>
+                <p class="summary">Java数据应用快速开发框架，灵感来自Streamlit</p>
+                <ul>
+                    <li>技术栈：Java，支持独立/嵌入式模式，热重载</li>
+                    <li>功能：UI组件（滑块、文本、Markdown），LangChain4J集成示例</li>
+                    <li>社区：新兴项目，为Java开发者提供Python Streamlit替代方案</li>
+                </ul>
+                <p class="reason"><strong>推荐理由：</strong>填补Java生态在数据应用快速开发领域的空白，提升开发效率</p>
+                <p><a href="https://github.com/javelit/javelit" aria-label="查看 Javelit GitHub 仓库">https://github.com/javelit/javelit</a></p>
+            </article>
+        </section>
+        
+        <div class="footer">
+            <p>数据来源：GitHub公开仓库 · 筛选标准：Star增长≥200或≥20%，解决高频痛点，权威推荐，颠覆性技术</p>
+            <p>本页面仅供技术交流参考，项目信息以GitHub仓库为准</p>
+        </div>
+    </div>
+</body>
+</html>

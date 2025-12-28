@@ -9,25 +9,151 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 获取项目根目录
-const rootDir = path.resolve(__dirname, '..');
+// 检测Vercel环境
+const isVercel = !!process.env.VERCEL;
+console.log('Running in Vercel environment:', isVercel);
+
+// 获取项目根目录 - 针对Vercel环境进行特殊处理
+let rootDir;
+if (isVercel) {
+  // 在Vercel中，当前工作目录是 /var/task
+  rootDir = process.cwd();
+} else {
+  // 本地环境
+  rootDir = path.resolve(__dirname, '..');
+}
+console.log('Root directory:', rootDir);
 
 // 解析JSON请求体
 app.use(express.json());
 
+// 确定public目录路径
+let publicDir;
+if (isVercel) {
+  // 在Vercel中，public目录应该直接位于根目录
+  publicDir = path.join(rootDir, 'public');
+} else {
+  // 本地环境
+  publicDir = path.join(rootDir, 'public');
+}
+console.log('Public directory path:', publicDir);
+
+// 检查public目录是否存在
+fs.access(publicDir, fs.constants.F_OK, (err) => {
+  if (err) {
+    console.error('Public directory does not exist:', err);
+    console.log('Current working directory:', process.cwd());
+    console.log('Directory contents:', fs.readdirSync(process.cwd(), { withFileTypes: true }).map(dirent => dirent.name));
+  } else {
+    console.log('Public directory exists');
+    console.log('Public directory contents:', fs.readdirSync(publicDir));
+  }
+});
+
+// 添加favicon fallback处理，避免404错误
+app.get(['/favicon.ico', '/favicon.png'], (req, res) => {
+  // 返回204 No Content，避免浏览器显示404错误
+  res.status(204).end();
+});
+
 // 使用Express的静态文件中间件
-const publicDir = path.join(rootDir, 'public');
 app.use(express.static(publicDir));
 
 // 主页面路由 - 确保根路径返回index.html
 app.get('/', (req, res) => {
-  const filePath = path.join(publicDir, 'index.html');
-  res.sendFile(filePath, (err) => {
-    if (err) {
-      console.error('Error sending index.html:', err);
-      res.status(500).send('Error loading page');
+  // 尝试多种可能的路径
+  const possiblePaths = [
+    path.join(publicDir, 'index.html'), // 标准路径
+    path.join(process.cwd(), 'public', 'index.html'), // Vercel工作目录路径
+    path.join(__dirname, '..', 'public', 'index.html'), // 相对路径
+    path.join('/var/task', 'public', 'index.html'), // 硬编码Vercel路径
+    // 直接读取文件内容作为最后的备选方案
+  ];
+  
+  const tryNextPath = (index) => {
+    if (index >= possiblePaths.length) {
+      console.error('All file paths failed. Trying to read file content directly...');
+      
+      // 最后的备选方案：直接读取并返回index.html内容
+      const fileContent = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub技术速递生成器</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📰</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        .error-message {
+            color: #e74c3c;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fdecea;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GitHub技术速递生成器</h1>
+        <p>欢迎使用GitHub技术速递生成器！</p>
+        <div class="error-message">
+            <h2>服务正在启动中...</h2>
+            <p>如果您看到此消息，说明服务器正在初始化。请稍后刷新页面，或联系管理员。</p>
+        </div>
+    </div>
+</body>
+</html>`;
+      
+      res.send(fileContent);
+      return;
     }
-  });
+    
+    const filePath = possiblePaths[index];
+    console.log(`Trying path ${index + 1}/${possiblePaths.length}:`, filePath);
+    
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        console.error(`Path ${index + 1} failed:`, err.message);
+        tryNextPath(index + 1);
+      } else {
+        console.log(`Success! Serving index.html from:`, filePath);
+        res.sendFile(filePath, (sendErr) => {
+          if (sendErr) {
+            console.error('Error sending index.html:', sendErr);
+            tryNextPath(index + 1);
+          }
+        });
+      }
+    });
+  };
+  
+  // 开始尝试路径
+  tryNextPath(0);
 });
 
 // API端点：生成技术速递

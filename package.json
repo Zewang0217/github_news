@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
+    "build": "echo 'Build completed'",
     "generate": "node src/main.js"
   },
   "dependencies": {

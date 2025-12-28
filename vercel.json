@@ -5,14 +5,16 @@
   "builds": [
     {
       "src": "src/server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "public/**/*",
+          "templates/**/*"
+        ]
+      }
     }
   ],
   "routes": [
-    {
-      "src": "/(style.css|script.js|index.html)",
-      "dest": "/public/$1"
-    },
     {
       "src": "/(.*)",
       "dest": "src/server.js"

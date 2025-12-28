@@ -218,11 +218,11 @@ YYMMDDHHmm.html
 
 ### 主页
 
-! `https://github.com/ `g0217/github_news/raw/main/photos/%E4%B8%BB%E9%A1%B5.png`
+![主页](https://github.com/Zewang0217/github_news/blob/main/photos/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.png)
 
 ### 使用说明
 
-! `https://`ithub.com/Zew `/github_news/raw/main/photos/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.png`
+![https://github.com/Zewang0217/github_news/blob/main/photos/%E4%B8%BB%E9%A1%B5.png](https://github.com/Zewang0217/github_news/blob/main/photos/%E4%B8%BB%E9%A1%B5.png)
 
 ### 历史报告记录
 
