@@ -2,7 +2,7 @@
   "name": "tech-digest-generator",
   "version": "1.0.0",
   "description": "基于 DeepSeek 的 GitHub 技术速递生成器",
-  "main": "src/main.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "generate": "node src/main.js"

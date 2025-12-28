@@ -497,12 +497,231 @@ footer {
 article, #resultContainer article {
     background: rgba(0, 18, 51, 0.7) !important;
     padding: 25px !important;
-    margin-bottom: 25px !important;
-    border-radius: 12px !important;
-    border: 1px solid rgba(0, 240, 255, 0.3) !important;
-    transition: all 0.3s ease !important;
-    position: relative !important;
-    overflow: hidden !important;
+}
+
+/* 历史记录样式 */
+.history-container {
+    position: relative;
+    display: inline-block;
+    float: right;
+    margin-top: -20px;
+    z-index: 1001;
+}
+
+.history-btn {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 120, 255, 0.3));
+    color: #00F0FF;
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 240, 255, 0.2);
+}
+
+.history-btn:hover {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(0, 120, 255, 0.4));
+    box-shadow: 0 4px 16px rgba(0, 240, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.history-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+    width: 350px;
+    max-height: 400px;
+    overflow-y: auto;
+    background: rgba(0, 18, 51, 0.95);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 240, 255, 0.3);
+    z-index: 1000;
+    backdrop-filter: blur(15px);
+}
+
+.history-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.history-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #00F0FF;
+    font-weight: 600;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+}
+
+.history-tip {
+    font-size: 11px;
+    color: rgba(224, 224, 224, 0.6);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgba(224, 224, 224, 0.7);
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #00F0FF;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+}
+
+.history-list {
+    padding: 10px;
+}
+
+.no-history {
+    text-align: center;
+    color: rgba(224, 224, 224, 0.6);
+    padding: 20px;
+    font-size: 14px;
+}
+
+.history-item {
+    padding: 12px;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    background: rgba(0, 30, 60, 0.5);
+}
+
+.history-item:hover {
+    background: rgba(0, 40, 80, 0.7);
+    border-color: rgba(0, 240, 255, 0.4);
+    transform: translateX(2px);
+}
+
+.history-item-info {
+    margin-bottom: 8px;
+}
+
+.history-item-time {
+    font-size: 12px;
+    color: rgba(224, 224, 224, 0.7);
+    margin-bottom: 4px;
+}
+
+.history-item-domains {
+    font-weight: 600;
+    color: #00F0FF;
+    margin-bottom: 4px;
+    font-size: 14px;
+    text-shadow: 0 0 4px rgba(0, 240, 255, 0.3);
+}
+
+.history-item-prompt {
+    font-size: 12px;
+    color: rgba(224, 224, 224, 0.6);
+    line-height: 1.4;
+}
+
+.history-item-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.load-btn, .delete-btn {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.load-btn {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 120, 255, 0.3));
+    color: #00F0FF;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 240, 255, 0.2);
+}
+
+.load-btn:hover {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(0, 120, 255, 0.4));
+    box-shadow: 0 3px 12px rgba(0, 240, 255, 0.3);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, rgba(255, 80, 80, 0.2), rgba(200, 0, 0, 0.3));
+    color: rgba(255, 120, 120, 0.9);
+    border: 1px solid rgba(255, 80, 80, 0.3);
+    box-shadow: 0 2px 8px rgba(255, 80, 80, 0.2);
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 80, 80, 0.3), rgba(200, 0, 0, 0.4));
+    box-shadow: 0 3px 12px rgba(255, 80, 80, 0.3);
+    color: rgba(255, 120, 120, 1);
+}
+
+.history-footer {
+    padding: 15px;
+    border-top: 1px solid rgba(0, 240, 255, 0.3);
+    text-align: right;
+}
+
+.clear-btn {
+    background: linear-gradient(135deg, rgba(255, 80, 80, 0.2), rgba(200, 0, 0, 0.3));
+    color: rgba(255, 120, 120, 0.9);
+    border: 1px solid rgba(255, 80, 80, 0.3);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(255, 80, 80, 0.2);
+}
+
+.clear-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 80, 80, 0.3), rgba(200, 0, 0, 0.4));
+    box-shadow: 0 3px 12px rgba(255, 80, 80, 0.3);
+    color: rgba(255, 120, 120, 1);
+}
+
+/* 滚动条样式 */
+.history-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.history-panel::-webkit-scrollbar-track {
+    background: rgba(0, 30, 60, 0.5);
+    border-radius: 3px;
+}
+
+.history-panel::-webkit-scrollbar-thumb {
+    background: rgba(0, 240, 255, 0.4);
+    border-radius: 3px;
+}
+
+.history-panel::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 240, 255, 0.6);
 }
 
 article::before, #resultContainer article::before {

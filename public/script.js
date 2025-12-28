@@ -10,6 +10,10 @@ const togglePromptBtn = document.getElementById('togglePromptBtn');
 const promptContainer = document.getElementById('promptContainer');
 const promptTextarea = document.getElementById('prompt');
 
+// 使用说明切换处理
+const toggleUsageBtn = document.getElementById('toggleUsageBtn');
+const usageContent = document.getElementById('usageContent');
+
 // 设置默认提示词
 promptTextarea.value = DEFAULT_PROMPT;
 
@@ -19,6 +23,17 @@ togglePromptBtn.addEventListener('click', () => {
         promptContainer.style.display = 'block';
     } else {
         promptContainer.style.display = 'none';
+    }
+});
+
+// 为使用说明切换按钮添加事件监听器
+toggleUsageBtn.addEventListener('click', () => {
+    if (usageContent.style.display === 'none' || usageContent.style.display === '') {
+        usageContent.style.display = 'block';
+        toggleUsageBtn.classList.add('active');
+    } else {
+        usageContent.style.display = 'none';
+        toggleUsageBtn.classList.remove('active');
     }
 });
 
@@ -422,3 +437,151 @@ showResult = function(html) {
     // 延迟初始化，确保DOM已更新
     setTimeout(initAIExplainButtons, 100);
 };
+
+// 历史记录管理
+
+// 获取历史记录
+function getHistory() {
+    const history = localStorage.getItem('techDigestHistory');
+    return history ? JSON.parse(history) : [];
+}
+
+// 保存到历史记录
+function saveToHistory(html, domains, prompt) {
+    const history = getHistory();
+    const newRecord = {
+        id: Date.now(),
+        time: new Date().toLocaleString('zh-CN'),
+        domains: domains,
+        prompt: prompt,
+        html: html
+    };
+    
+    // 限制历史记录数量（最多保存6条）
+    history.unshift(newRecord);
+    if (history.length > 6) {
+        history.pop();
+    }
+    
+    localStorage.setItem('techDigestHistory', JSON.stringify(history));
+    updateHistoryPanel();
+}
+
+// 删除历史记录
+function deleteHistory(id) {
+    const history = getHistory();
+    const updatedHistory = history.filter(record => record.id !== id);
+    localStorage.setItem('techDigestHistory', JSON.stringify(updatedHistory));
+    updateHistoryPanel();
+}
+
+// 清空所有历史记录
+function clearAllHistory() {
+    if (confirm('确定要清空所有历史记录吗？')) {
+        localStorage.removeItem('techDigestHistory');
+        updateHistoryPanel();
+        alert('历史记录已清空');
+    }
+}
+
+// 加载历史记录
+function loadHistory(id) {
+    const history = getHistory();
+    const record = history.find(record => record.id === id);
+    if (record) {
+        showResult(record.html);
+        document.getElementById('downloadBtn').style.display = 'inline-block';
+        // 更新表单字段
+        document.getElementById('domains').value = record.domains;
+        document.getElementById('prompt').value = record.prompt;
+        // 关闭历史面板
+        document.getElementById('historyPanel').style.display = 'none';
+    }
+}
+
+// 更新历史记录面板
+function updateHistoryPanel() {
+    const historyList = document.getElementById('historyList');
+    const history = getHistory();
+    
+    if (history.length === 0) {
+        historyList.innerHTML = '<div class="no-history">暂无历史记录</div>';
+        return;
+    }
+    
+    historyList.innerHTML = history.map(record => `
+        <div class="history-item">
+            <div class="history-item-info">
+                <div class="history-item-time">${record.time}</div>
+                <div class="history-item-domains">${record.domains}</div>
+                <div class="history-item-prompt">${record.prompt.substring(0, 50)}${record.prompt.length > 50 ? '...' : ''}</div>
+            </div>
+            <div class="history-item-actions">
+                <button class="load-btn" onclick="loadHistory(${record.id})">查看</button>
+                <button class="delete-btn" onclick="deleteHistory(${record.id})">删除</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 初始化历史记录功能
+function initHistoryFeature() {
+    const historyBtn = document.getElementById('historyBtn');
+    const historyPanel = document.getElementById('historyPanel');
+    const closeHistoryBtn = document.getElementById('closeHistoryBtn');
+    const clearAllHistoryBtn = document.getElementById('clearAllHistoryBtn');
+    
+    // 切换历史面板显示
+    historyBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (historyPanel.style.display === 'none' || historyPanel.style.display === '') {
+            historyPanel.style.display = 'block';
+            updateHistoryPanel();
+        } else {
+            historyPanel.style.display = 'none';
+        }
+    });
+    
+    // 关闭历史面板
+    closeHistoryBtn.addEventListener('click', () => {
+        historyPanel.style.display = 'none';
+    });
+    
+    // 清空所有历史记录
+    clearAllHistoryBtn.addEventListener('click', clearAllHistory);
+    
+    // 点击面板外部关闭
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.history-container')) {
+            historyPanel.style.display = 'none';
+        }
+    });
+}
+
+// 在页面加载时初始化历史记录功能
+document.addEventListener('DOMContentLoaded', () => {
+    initHistoryFeature();
+    
+    // 尝试恢复最后一次生成的结果
+    const history = getHistory();
+    if (history.length > 0) {
+        // 不自动恢复，只在用户点击历史记录时显示
+    }
+});
+
+// 修改showResult函数，添加历史记录保存功能
+function showResult(html) {
+    const resultSection = document.getElementById('resultSection');
+    const resultContainer = document.getElementById('resultContainer');
+    
+    resultContainer.innerHTML = html;
+    resultSection.style.display = 'block';
+    
+    // 保存到历史记录
+    const domains = document.getElementById('domains').value;
+    const prompt = document.getElementById('prompt').value;
+    saveToHistory(html, domains, prompt);
+    
+    // 滚动到结果区域
+    resultSection.scrollIntoView({ behavior: 'smooth' });
+}
