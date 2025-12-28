@@ -1,0 +1,20 @@
+{
+  "name": "tech-digest-generator",
+  "version": "1.0.0",
+  "description": "基于 DeepSeek 的 GitHub 技术速递生成器",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "generate": "node src/main.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "handlebars": "^4.7.8"
+  },
+  "keywords": ["github", "tech-digest", "deepseek", "agent"],
+  "author": "",
+  "license": "MIT"
+}
