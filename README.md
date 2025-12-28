@@ -214,6 +214,36 @@ YYMMDDHHmm.html
 * 语义化标签，提升可访问性
 * 响应式设计，适配不同设备
 
-## 许可证
+## 展示
 
-MIT
+### 主页
+
+https://github.com/Zewang0217/github_news/blob/main/photos/%E4%B8%BB%E9%A1%B5.png
+
+### 使用说明
+
+https://github.com/Zewang0217/github_news/blob/main/photos/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.png
+
+### 历史报告记录
+
+https://github.com/Zewang0217/github_news/blob/main/photos/%E5%8E%86%E5%8F%B2%E6%8A%A5%E5%91%8A%E8%AE%B0%E5%BD%95.png
+
+### 效果展示
+
+https://github.com/Zewang0217/github_news/blob/main/photos/%E6%8A%A5%E5%91%8A%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA.png
+
+### 多关键词
+
+https://github.com/Zewang0217/github_news/blob/main/photos/%E6%94%AF%E6%8C%81%E5%A4%9A%E5%85%B3%E9%94%AE%E8%AF%8D%E6%90%9C%E7%B4%A2.png
+
+### 提示词自定义
+
+https://github.com/Zewang0217/github_news/blob/main/photos/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%90%E7%A4%BA%E8%AF%8D.png
+
+### 日期选择
+
+https://github.com/Zewang0217/github_news/blob/main/photos/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E6%9C%9F%E8%8C%83%E5%9B%B4.png
+
+### 单个项目内容
+
+https://github.com/Zewang0217/github_news/blob/main/photos/%E9%A1%B9%E7%9B%AE%E5%86%85%E5%AE%B9.png
