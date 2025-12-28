@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const { callAgent } = require('./agent/client');
 const { generateHTML } = require('./generator/html');
 const axios = require('axios');
@@ -8,15 +9,29 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 设置静态文件目录
-app.use(express.static('public'));
+// 获取项目根目录
+const rootDir = path.resolve(__dirname, '..');
 
 // 解析JSON请求体
 app.use(express.json());
 
+// 静态文件路由 - 处理CSS和JS文件
+app.get('/:file(style.css|script.js)', (req, res) => {
+  const filePath = path.join(rootDir, 'public', req.params.file);
+  res.sendFile(filePath);
+});
+
 // 主页面路由
 app.get('/', (req, res) => {
-  res.sendFile('public/index.html', { root: __dirname + '/../' });
+  const filePath = path.join(rootDir, 'public', 'index.html');
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading index.html:', err);
+      res.status(500).send('Error loading page');
+      return;
+    }
+    res.send(data);
+  });
 });
 
 // API端点：生成技术速递
