@@ -15,22 +15,18 @@ const rootDir = path.resolve(__dirname, '..');
 // 解析JSON请求体
 app.use(express.json());
 
-// 静态文件路由 - 处理CSS和JS文件
-app.get('/:file(style.css|script.js)', (req, res) => {
-  const filePath = path.join(rootDir, 'public', req.params.file);
-  res.sendFile(filePath);
-});
+// 使用Express的静态文件中间件
+const publicDir = path.join(rootDir, 'public');
+app.use(express.static(publicDir));
 
-// 主页面路由
+// 主页面路由 - 确保根路径返回index.html
 app.get('/', (req, res) => {
-  const filePath = path.join(rootDir, 'public', 'index.html');
-  fs.readFile(filePath, 'utf8', (err, data) => {
+  const filePath = path.join(publicDir, 'index.html');
+  res.sendFile(filePath, (err) => {
     if (err) {
-      console.error('Error reading index.html:', err);
+      console.error('Error sending index.html:', err);
       res.status(500).send('Error loading page');
-      return;
     }
-    res.send(data);
   });
 });
 

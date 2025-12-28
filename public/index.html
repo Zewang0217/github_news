@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub技术速递生成器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GitHub技术速递生成器</h1>
+            <p>基于 DeepSeek 的 GitHub 技术领域热点项目推荐</p>
+        </header>
+
+        <div class="usage-section">
+            <button id="toggleUsageBtn" class="toggle-usage-btn">
+                使用说明
+            </button>
+            <div id="usageContent" class="usage-content" style="display: none;">
+                <h2>如何使用</h2>
+                <div class="usage-steps">
+                    <div class="usage-step">
+                        <h3>1. 输入技术领域</h3>
+                        <p>在技术领域输入框中输入您感兴趣的技术关键词，例如：人工智能、前端开发、区块链等。支持多个关键词，用逗号分隔。</p>
+                    </div>
+                    <div class="usage-step">
+                        <h3>2. 自定义提示词（可选）</h3>
+                        <p>点击"显示提示词"按钮，输入自定义提示词，例如："更关注工程实践和性能优化"或"更偏向初学者"。</p>
+                    </div>
+                    <div class="usage-step">
+                        <h3>3. 选择日期范围</h3>
+                        <p>选择您想要查看的时间范围，可以选择最近7天、15天、30天，或自定义日期范围。</p>
+                    </div>
+                    <div class="usage-step">
+                        <h3>4. 生成技术速递</h3>
+                        <p>点击"生成技术速递"按钮，系统将为您生成该技术领域的GitHub热点项目推荐报告。</p>
+                    </div>
+                    <div class="usage-step">
+                        <h3>5. 查看结果</h3>
+                        <p>生成完成后，您可以查看详细的技术速递报告，包括项目概述、核心功能、技术栈等信息。</p>
+                    </div>
+                    <div class="usage-step">
+                        <h3>6. 下载报告</h3>
+                        <p>点击"下载报告"按钮，将报告保存为HTML文件，方便离线查看和分享。</p>
+                    </div>
+                    <div class="usage-step">
+                        <h3>7. 查看历史记录</h3>
+                        <p>点击右上角的"历史记录"按钮，查看您之前生成的技术速递报告。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <div class="input-section">
+                <form id="generateForm">
+                    <div class="form-group">
+                        <label for="domains">技术领域</label>
+                        <input type="text" id="domains" name="domains" placeholder="例如：人工智能, 前端开发, 区块链" required>
+                        <small>支持多个关键词，用逗号分隔</small>
+                    </div>
+
+                    <button type="button" id="togglePromptBtn" class="toggle-prompt-btn">
+                        显示提示词
+                    </button>
+
+                    <div id="promptContainer" class="form-group" style="display: none;">
+                        <label for="prompt">自定义提示词</label>
+                        <textarea id="prompt" name="prompt" rows="4" placeholder="更关注工程实践和性能优化，或更偏向初学者"></textarea>
+                        <small>可自定义生成内容的侧重点</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>日期范围</label>
+                        <div class="date-range-options">
+                            <label>
+                                <input type="radio" name="dateRangeType" value="7" checked>
+                                <span>最近7天</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="dateRangeType" value="15">
+                                <span>最近15天</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="dateRangeType" value="30">
+                                <span>最近30天</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="dateRangeType" value="custom">
+                                <span>自定义范围</span>
+                            </label>
+                        </div>
+                        <div id="customDateRange" class="date-picker-container" style="display: none;">
+                            <div class="date-picker-item">
+                                <label for="startDate" class="date-picker-label">开始日期</label>
+                                <input type="date" id="startDate" name="startDate">
+                            </div>
+                            <div class="date-picker-item">
+                                <label for="endDate" class="date-picker-label">结束日期</label>
+                                <input type="date" id="endDate" name="endDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="generateBtn">
+                            生成技术速递
+                        </button>
+                        <button type="button" id="downloadBtn" style="display: none;">
+                            下载报告
+                        </button>
+                    </div>
+                </form>
+
+                <div id="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>正在生成技术速递，请稍候...</p>
+                </div>
+            </div>
+
+            <div id="resultSection" class="result-section" style="display: none;">
+                <h2>生成结果</h2>
+                <div id="resultContainer"></div>
+            </div>
+        </main>
+
+        <div class="history-container">
+            <button id="historyBtn" class="history-btn">历史记录</button>
+            <div id="historyPanel" class="history-panel" style="display: none;">
+                <div class="history-header">
+                    <h3>历史记录</h3>
+                    <span class="history-tip">点击查看详情</span>
+                    <button id="closeHistoryBtn" class="close-btn">&times;</button>
+                </div>
+                <div id="historyList" class="history-list"></div>
+                <div class="history-footer">
+                    <button id="clearAllHistoryBtn" class="clear-btn">清空历史</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 GitHub技术速递生成器 | 基于 DeepSeek 大模型</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -6,15 +6,11 @@
     {
       "src": "src/server.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "public/**/*",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/public/(.*)",
+      "src": "/(style.css|script.js|index.html)",
       "dest": "/public/$1"
     },
     {
